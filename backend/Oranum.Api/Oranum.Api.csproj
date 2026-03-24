@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Oranum.Application\Oranum.Application.csproj" />
+    <ProjectReference Include="..\Oranum.Domain\Oranum.Domain.csproj" />
+    <ProjectReference Include="..\Oranum.Infrastructure\Oranum.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

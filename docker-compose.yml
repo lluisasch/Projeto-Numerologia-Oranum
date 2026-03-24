@@ -1,0 +1,55 @@
+﻿services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: oranum-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-oranum}
+      POSTGRES_USER: ${POSTGRES_USER:-oranum}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-oranum}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - oranum-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-oranum} -d ${POSTGRES_DB:-oranum}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Oranum.Api/Dockerfile
+    container_name: oranum-backend
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: ${CONNECTIONSTRINGS__DEFAULTCONNECTION:-Host=postgres;Port=5432;Database=oranum;Username=oranum;Password=oranum}
+      OpenAI__ApiKey: ${OpenAI__ApiKey:-}
+      OpenAI__BaseUrl: ${OpenAI__BaseUrl:-https://api.openai.com/v1/}
+      OpenAI__Model: ${OpenAI__Model:-gpt-4.1-mini}
+      OpenAI__Temperature: ${OpenAI__Temperature:-0.9}
+      OpenAI__MaxRetries: ${OpenAI__MaxRetries:-2}
+      OpenAI__TimeoutSeconds: ${OpenAI__TimeoutSeconds:-45}
+      Cors__AllowedOrigins__0: ${Cors__AllowedOrigins__0:-http://localhost:5173}
+      Cors__AllowedOrigins__1: ${Cors__AllowedOrigins__1:-http://localhost:3000}
+    ports:
+      - "${BACKEND_PORT:-8080}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-/api}
+    container_name: oranum-frontend
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
+    depends_on:
+      - backend
+
+volumes:
+  oranum-postgres-data:
