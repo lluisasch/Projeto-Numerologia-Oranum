@@ -1,4 +1,4 @@
-﻿namespace Oranum.Domain.ValueObjects;
+namespace Oranum.Domain.ValueObjects;
 
 public sealed record CompatibilityProfile(
     int CompatibilityScore,
@@ -8,4 +8,10 @@ public sealed record CompatibilityProfile(
     string SpiritualAffinity,
     IReadOnlyList<string> StrengthHints,
     IReadOnlyList<string> AttentionHints,
-    string BalanceGuidance);
+    string BalanceGuidance,
+    string RelationshipAxis,
+    string ArchetypeDynamic,
+    string NumberDynamic,
+    string ElementalDynamic,
+    string EncounterTone,
+    string ConflictPattern);

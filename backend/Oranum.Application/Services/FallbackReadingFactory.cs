@@ -1,4 +1,4 @@
-﻿using Oranum.Application.DTOs.Responses;
+using Oranum.Application.DTOs.Responses;
 using Oranum.Application.Models;
 
 namespace Oranum.Application.Services;
@@ -9,15 +9,15 @@ public static class FallbackReadingFactory
         new(
             context.FullName,
             context.Numerology.PrincipalNumber,
-            $"Vibracao {context.Numerology.PrincipalNumber}: {context.Numerology.PredominantArchetype}",
+            $"Vibração {context.Numerology.PrincipalNumber}: {context.Numerology.PredominantArchetype}",
             context.Numerology.EnergySignature,
             context.Numerology.PredominantArchetype,
             context.Numerology.SymbolicMeaning,
             context.Numerology.StrengthHints,
             context.Numerology.ChallengeHints,
-            $"Na leitura simbolica do Oranum, o nome {context.FullName} ecoa como um campo de {context.Numerology.PredominantArchetype.ToLowerInvariant()}, sugerindo sensibilidade para sinais, ciclos e escolhas com significado.",
-            $"Honre o numero {context.Numerology.PrincipalNumber} com pequenos rituais de presenca, escuta e intencao consciente.",
-            $"Seu nome revela uma vibracao de {context.Numerology.SymbolicMeaning.ToLowerInvariant()} e pede que voce traduza essa energia em atitudes alinhadas com a propria essencia.");
+            $"Na leitura simbólica do Oranum, o nome {context.FullName} se move por uma cadência {context.Numerology.NameCadence} e por uma lente de {context.Numerology.SymbolicLens}, sugerindo presença, sensibilidade e escolhas com significado.",
+            $"Honre o número {context.Numerology.PrincipalNumber} com pequenos rituais de presença, escuta e intenção consciente.",
+            $"Seu nome revela uma vibração ligada a {context.Numerology.SymbolicMeaning.ToLowerInvariant()} e encontra no arquétipo {context.Numerology.PredominantArchetype} uma forma clara de expressar essa força no cotidiano.");
 
     public static BirthDateReadingResponse CreateBirthReading(BirthDateReadingContext context) =>
         new(
@@ -44,5 +44,5 @@ public static class FallbackReadingFactory
             context.CompatibilityProfile.StrengthHints,
             context.CompatibilityProfile.AttentionHints,
             context.CompatibilityProfile.BalanceGuidance,
-            $"O encontro entre {context.Person1Name} e {context.Person2Name} traz uma alquimia simbolica de {context.CompatibilityProfile.CompatibilityLevel.ToLowerInvariant()}, com espaco tanto para encanto quanto para amadurecimento.");
+            $"{context.Person1Name} e {context.Person2Name} formam um vínculo de {context.CompatibilityProfile.RelationshipAxis.ToLowerInvariant()}, marcado por um encontro em que {context.CompatibilityProfile.EncounterTone.ToLowerInvariant()}.");
 }

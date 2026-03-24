@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+using System.Globalization;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using Oranum.Application.Abstractions;
 using Oranum.Application.DTOs.Requests;
@@ -17,6 +19,51 @@ public sealed class ReadingService : IReadingService
     {
         WriteIndented = false
     };
+
+    private static readonly HashSet<string> AllowedArchetypes = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "Herói",
+        "Cuidador",
+        "Criador",
+        "Governante",
+        "Explorador",
+        "Amante",
+        "Sábio",
+        "Mago",
+        "Inocente",
+        "Rebelde"
+    };
+
+    private static readonly string[] InternalTerms =
+    [
+        "backend",
+        "frontend",
+        "json",
+        "prompt",
+        "algorit",
+        "modelo",
+        "sistema",
+        "interface",
+        "layout",
+        "site",
+        "api",
+        "inteligência artificial",
+        " ia "
+    ];
+
+    private static readonly (string Source, string Target)[] WordingReplacements =
+    [
+        ("timing", "ritmo"),
+        ("processamento interno", "jeito de sentir"),
+        ("tradução afetiva", "clareza emocional"),
+        ("chamada simbólica", "sensação de destino"),
+        ("espelhamento", "efeito de espelho"),
+        ("contraste fértil", "diferença que pode fazer bem"),
+        ("camada elemental", "leitura dos elementos"),
+        ("mapa completo", "leitura mais completa"),
+        ("eixo deste vínculo é", "No fundo, este vínculo fala de"),
+        ("eixo do vínculo", "tom principal do vínculo")
+    ];
 
     private readonly ReadingRequestValidator _validator;
     private readonly NumerologyCalculator _numerologyCalculator;
@@ -145,7 +192,7 @@ public sealed class ReadingService : IReadingService
         }
         catch (Exception exception)
         {
-            _logger.LogWarning(exception, "Falha ao gerar leitura com IA. Sera utilizado fallback deterministico.");
+            _logger.LogWarning(exception, "Falha ao gerar leitura com IA. Será utilizado fallback determinístico.");
             return new AiStructuredResult<T>(default, null, null);
         }
     }
@@ -175,17 +222,17 @@ public sealed class ReadingService : IReadingService
 
         return payload with
         {
-            NomeAnalisado = ReadOrFallback(payload.NomeAnalisado, fallback.NomeAnalisado),
-            NumeroPrincipal = payload.NumeroPrincipal == 0 ? fallback.NumeroPrincipal : payload.NumeroPrincipal,
-            TituloLeitura = ReadOrFallback(payload.TituloLeitura, fallback.TituloLeitura),
-            EnergiaGeral = ReadOrFallback(payload.EnergiaGeral, fallback.EnergiaGeral),
-            ArquetipoPredominante = ReadOrFallback(payload.ArquetipoPredominante, fallback.ArquetipoPredominante),
-            SignificadoDoNome = ReadOrFallback(payload.SignificadoDoNome, fallback.SignificadoDoNome),
-            Forcas = ReadListOrFallback(payload.Forcas, fallback.Forcas),
-            Desafios = ReadListOrFallback(payload.Desafios, fallback.Desafios),
-            LeituraXamanica = ReadOrFallback(payload.LeituraXamanica, fallback.LeituraXamanica),
-            ConselhoEspiritual = ReadOrFallback(payload.ConselhoEspiritual, fallback.ConselhoEspiritual),
-            ResumoFinal = ReadOrFallback(payload.ResumoFinal, fallback.ResumoFinal)
+            NomeAnalisado = NormalizeDisplayName(ReadOrFallback(payload.NomeAnalisado, fallback.NomeAnalisado)),
+            NumeroPrincipal = NormalizeNumber(payload.NumeroPrincipal, fallback.NumeroPrincipal),
+            TituloLeitura = NormalizeTitle(ReadOrFallback(payload.TituloLeitura, fallback.TituloLeitura)),
+            EnergiaGeral = NormalizeParagraph(ReadOrFallback(payload.EnergiaGeral, fallback.EnergiaGeral)),
+            ArquetipoPredominante = NormalizeArchetype(payload.ArquetipoPredominante, fallback.ArquetipoPredominante),
+            SignificadoDoNome = NormalizeParagraph(ReadOrFallback(payload.SignificadoDoNome, fallback.SignificadoDoNome)),
+            Forcas = NormalizeList(payload.Forcas, fallback.Forcas),
+            Desafios = NormalizeList(payload.Desafios, fallback.Desafios),
+            LeituraXamanica = NormalizeParagraph(ReadOrFallback(payload.LeituraXamanica, fallback.LeituraXamanica)),
+            ConselhoEspiritual = NormalizeParagraph(ReadOrFallback(payload.ConselhoEspiritual, fallback.ConselhoEspiritual)),
+            ResumoFinal = NormalizeParagraph(ReadOrFallback(payload.ResumoFinal, fallback.ResumoFinal))
         };
     }
 
@@ -200,15 +247,15 @@ public sealed class ReadingService : IReadingService
         return payload with
         {
             DataNascimento = ReadOrFallback(payload.DataNascimento, fallback.DataNascimento),
-            SignoSolar = ReadOrFallback(payload.SignoSolar, fallback.SignoSolar),
-            Elemento = ReadOrFallback(payload.Elemento, fallback.Elemento),
-            CaminhoDeVida = payload.CaminhoDeVida == 0 ? fallback.CaminhoDeVida : payload.CaminhoDeVida,
-            EnergiaCentral = ReadOrFallback(payload.EnergiaCentral, fallback.EnergiaCentral),
-            TendenciasEmocionais = ReadOrFallback(payload.TendenciasEmocionais, fallback.TendenciasEmocionais),
-            MissaoDeVida = ReadOrFallback(payload.MissaoDeVida, fallback.MissaoDeVida),
-            Desafios = ReadListOrFallback(payload.Desafios, fallback.Desafios),
-            Potenciais = ReadListOrFallback(payload.Potenciais, fallback.Potenciais),
-            ConselhoFinal = ReadOrFallback(payload.ConselhoFinal, fallback.ConselhoFinal)
+            SignoSolar = NormalizeTitle(ReadOrFallback(payload.SignoSolar, fallback.SignoSolar)),
+            Elemento = NormalizeTitle(ReadOrFallback(payload.Elemento, fallback.Elemento)),
+            CaminhoDeVida = NormalizeNumber(payload.CaminhoDeVida, fallback.CaminhoDeVida),
+            EnergiaCentral = NormalizeParagraph(ReadOrFallback(payload.EnergiaCentral, fallback.EnergiaCentral)),
+            TendenciasEmocionais = NormalizeParagraph(ReadOrFallback(payload.TendenciasEmocionais, fallback.TendenciasEmocionais)),
+            MissaoDeVida = NormalizeParagraph(ReadOrFallback(payload.MissaoDeVida, fallback.MissaoDeVida)),
+            Desafios = NormalizeList(payload.Desafios, fallback.Desafios),
+            Potenciais = NormalizeList(payload.Potenciais, fallback.Potenciais),
+            ConselhoFinal = NormalizeParagraph(ReadOrFallback(payload.ConselhoFinal, fallback.ConselhoFinal))
         };
     }
 
@@ -220,25 +267,143 @@ public sealed class ReadingService : IReadingService
             return fallback;
         }
 
+        var percentual = payload.CompatibilidadePercentual is >= 1 and <= 100
+            ? payload.CompatibilidadePercentual
+            : fallback.CompatibilidadePercentual;
+
         return payload with
         {
-            Pessoa1 = ReadOrFallback(payload.Pessoa1, fallback.Pessoa1),
-            Pessoa2 = ReadOrFallback(payload.Pessoa2, fallback.Pessoa2),
-            CompatibilidadePercentual = payload.CompatibilidadePercentual == 0 ? fallback.CompatibilidadePercentual : payload.CompatibilidadePercentual,
-            NivelCompatibilidade = ReadOrFallback(payload.NivelCompatibilidade, fallback.NivelCompatibilidade),
-            AfinidadeEnergetica = ReadOrFallback(payload.AfinidadeEnergetica, fallback.AfinidadeEnergetica),
-            AfinidadeEmocional = ReadOrFallback(payload.AfinidadeEmocional, fallback.AfinidadeEmocional),
-            AfinidadeEspiritual = ReadOrFallback(payload.AfinidadeEspiritual, fallback.AfinidadeEspiritual),
-            PontosFortes = ReadListOrFallback(payload.PontosFortes, fallback.PontosFortes),
-            PontosDeAtencao = ReadListOrFallback(payload.PontosDeAtencao, fallback.PontosDeAtencao),
-            ConselhoRelacional = ReadOrFallback(payload.ConselhoRelacional, fallback.ConselhoRelacional),
-            ResumoVinculo = ReadOrFallback(payload.ResumoVinculo, fallback.ResumoVinculo)
+            Pessoa1 = NormalizeDisplayName(ReadOrFallback(payload.Pessoa1, fallback.Pessoa1)),
+            Pessoa2 = NormalizeDisplayName(ReadOrFallback(payload.Pessoa2, fallback.Pessoa2)),
+            CompatibilidadePercentual = percentual,
+            NivelCompatibilidade = NormalizeTitle(ReadOrFallback(payload.NivelCompatibilidade, fallback.NivelCompatibilidade)),
+            AfinidadeEnergetica = NormalizeParagraph(ReadOrFallback(payload.AfinidadeEnergetica, fallback.AfinidadeEnergetica)),
+            AfinidadeEmocional = NormalizeParagraph(ReadOrFallback(payload.AfinidadeEmocional, fallback.AfinidadeEmocional)),
+            AfinidadeEspiritual = NormalizeParagraph(ReadOrFallback(payload.AfinidadeEspiritual, fallback.AfinidadeEspiritual)),
+            PontosFortes = NormalizeList(payload.PontosFortes, fallback.PontosFortes),
+            PontosDeAtencao = NormalizeList(payload.PontosDeAtencao, fallback.PontosDeAtencao),
+            ConselhoRelacional = NormalizeParagraph(ReadOrFallback(payload.ConselhoRelacional, fallback.ConselhoRelacional)),
+            ResumoVinculo = NormalizeParagraph(ReadOrFallback(payload.ResumoVinculo, fallback.ResumoVinculo))
         };
     }
 
-    private static string ReadOrFallback(string? value, string fallback) =>
-        string.IsNullOrWhiteSpace(value) ? fallback : value.Trim();
+    private static int NormalizeNumber(int value, int fallback) => value == 0 ? fallback : value;
 
-    private static IReadOnlyList<string> ReadListOrFallback(IReadOnlyList<string>? value, IReadOnlyList<string> fallback) =>
-        value is { Count: > 0 } ? value : fallback;
+    private static string ReadOrFallback(string? value, string fallback)
+    {
+        var candidate = string.IsNullOrWhiteSpace(value) ? fallback : value.Trim();
+        candidate = NaturalizeWording(candidate);
+        return ContainsInternalTerms(candidate) ? fallback : candidate;
+    }
+
+    private static IReadOnlyList<string> NormalizeList(IReadOnlyList<string>? value, IReadOnlyList<string> fallback)
+    {
+        var source = value is { Count: > 0 } ? value : fallback;
+
+        var normalized = source
+            .Where(item => !string.IsNullOrWhiteSpace(item))
+            .Select(item => NormalizeParagraph(item))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+
+        return normalized.Length > 0 ? normalized : fallback;
+    }
+
+    private static string NormalizeArchetype(string? value, string fallback)
+    {
+        var candidate = NormalizeTitle(ReadOrFallback(value, fallback));
+        return AllowedArchetypes.Contains(candidate) ? candidate : fallback;
+    }
+
+    private static string NormalizeTitle(string value)
+    {
+        var normalized = CollapseWhitespace(NaturalizeWording(value));
+        normalized = normalized.Trim().TrimEnd('.', '!', '?', ';', ':');
+        return CapitalizeFirstLetter(normalized);
+    }
+
+    private static string NormalizeParagraph(string value)
+    {
+        var normalized = CollapseWhitespace(NaturalizeWording(value));
+        normalized = normalized.Replace(" ,", ",").Replace(" .", ".").Replace(" ;", ";").Replace(" :", ":");
+        normalized = CapitalizeFirstLetter(normalized.Trim());
+
+        if (string.IsNullOrWhiteSpace(normalized))
+        {
+            return normalized;
+        }
+
+        return normalized.EndsWith('.') || normalized.EndsWith('!') || normalized.EndsWith('?')
+            ? normalized
+            : $"{normalized}.";
+    }
+
+    private static string CollapseWhitespace(string value)
+    {
+        var parts = value
+            .Replace("\r", " ")
+            .Replace("\n", " ")
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+        return string.Join(' ', parts);
+    }
+
+    private static string NaturalizeWording(string value)
+    {
+        var normalized = value;
+        foreach (var (source, target) in WordingReplacements)
+        {
+            normalized = Regex.Replace(normalized, Regex.Escape(source), target, RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+        }
+
+        return normalized;
+    }
+
+    private static string CapitalizeFirstLetter(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return value;
+        }
+
+        var chars = value.ToCharArray();
+        for (var index = 0; index < chars.Length; index++)
+        {
+            if (!char.IsLetter(chars[index]))
+            {
+                continue;
+            }
+
+            chars[index] = char.ToUpper(chars[index], CultureInfo.GetCultureInfo("pt-BR"));
+            return new string(chars);
+        }
+
+        return value;
+    }
+
+    private static string NormalizeDisplayName(string value)
+    {
+        var culture = CultureInfo.GetCultureInfo("pt-BR");
+        var particles = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "da", "de", "do", "das", "dos", "e" };
+        var words = CollapseWhitespace(value)
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Select((word, index) =>
+            {
+                var lowered = word.ToLower(culture);
+                if (index > 0 && particles.Contains(lowered))
+                {
+                    return lowered;
+                }
+
+                return char.ToUpper(lowered[0], culture) + lowered[1..];
+            });
+
+        return string.Join(' ', words);
+    }
+
+    private static bool ContainsInternalTerms(string value)
+    {
+        var lowered = $" {value.ToLowerInvariant()} ";
+        return InternalTerms.Any(term => lowered.Contains(term));
+    }
 }

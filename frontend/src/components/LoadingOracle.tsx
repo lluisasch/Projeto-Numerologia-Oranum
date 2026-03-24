@@ -1,4 +1,4 @@
-﻿import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 
 type LoadingOracleProps = {
@@ -6,7 +6,7 @@ type LoadingOracleProps = {
   description?: string;
 };
 
-export function LoadingOracle({ title = "Consultando o oraculo...", description = "Alinhando simbolos, numeros e sinais sutis para revelar sua leitura." }: LoadingOracleProps) {
+export function LoadingOracle({ title = "Consultando o oráculo...", description = "Alinhando símbolos, números e sinais sutis para revelar sua leitura." }: LoadingOracleProps) {
   return (
     <div className="glass-panel flex flex-col items-center justify-center gap-5 px-6 py-12 text-center">
       <motion.div className="relative flex size-20 items-center justify-center rounded-full border border-gold/20 bg-gold/10" animate={{ rotate: 360 }} transition={{ duration: 14, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}>

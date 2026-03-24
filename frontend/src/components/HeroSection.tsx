@@ -1,11 +1,11 @@
-﻿import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Orbit, Sparkles, Stars } from "lucide-react";
 import { NameInputForm } from "@/components/NameInputForm";
 
 const highlights = [
-  "Leitura do nome com numerologia e arquetipo predominante",
-  "Camada complementar com signo solar, caminho de vida e missao simbolica",
-  "Compatibilidade mistica com texto envolvente e compartilhavel",
+  "Leitura do nome com numerologia e arquétipo predominante",
+  "Camada complementar com signo solar, caminho de vida e missão simbólica",
+  "Compatibilidade mística com texto envolvente e compartilhável",
 ];
 
 export function HeroSection() {
@@ -15,13 +15,13 @@ export function HeroSection() {
         <div>
           <motion.span initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65 }} className="gold-label">
             <Stars className="size-4" />
-            Experiencia mistica premium
+            Experiência mística premium
           </motion.span>
           <motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.75, delay: 0.05 }} className="mt-6 max-w-3xl font-display text-5xl leading-[0.96] text-white sm:text-6xl lg:text-7xl">
-            Seu nome guarda uma vibracao unica.
+            Seu nome guarda uma vibração única.
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.75, delay: 0.12 }} className="mt-6 max-w-2xl text-lg leading-8 text-mist/85 sm:text-xl">
-            Descubra a energia, os arquetipos e os caminhos ocultos revelados pelo seu nome e pela sua data de nascimento.
+            Descubra a energia, os arquétipos e os caminhos ocultos revelados pelo seu nome e pela sua data de nascimento.
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.75, delay: 0.18 }} className="mt-8">
             <NameInputForm />
@@ -47,16 +47,16 @@ export function HeroSection() {
                   <Sparkles className="size-10 text-gold" />
                 </div>
                 <div>
-                  <p className="text-sm uppercase tracking-[0.35em] text-mist/70">Mapa energetico do nome</p>
+                  <p className="text-sm uppercase tracking-[0.35em] text-mist/70">Mapa energético do nome</p>
                   <p className="mt-4 font-display text-5xl text-white">Ritual de leitura</p>
-                  <p className="mx-auto mt-4 max-w-sm text-sm leading-7 text-mist/80 sm:text-base">Um encontro entre numeros, simbolos e linguagem viva para transformar curiosidade em encantamento.</p>
+                  <p className="mx-auto mt-4 max-w-sm text-sm leading-7 text-mist/80 sm:text-base">Um encontro entre números, símbolos e linguagem sensível para transformar curiosidade em encantamento.</p>
                 </div>
               </div>
               <div className="grid gap-3 sm:grid-cols-3">
                 {[
-                  ["Nome", "Essencia simbolica"],
-                  ["Data", "Missao e tendencias"],
-                  ["Compatibilidade", "Afinidade do vinculo"],
+                  ["Nome", "Essência simbólica"],
+                  ["Data", "Missão e tendências"],
+                  ["Compatibilidade", "Afinidade do vínculo"],
                 ].map(([title, subtitle]) => (
                   <div key={title} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-center">
                     <p className="text-xs uppercase tracking-[0.26em] text-gold/90">{title}</p>

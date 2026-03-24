@@ -1,10 +1,13 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Oranum.Infrastructure.Data.Migrations;
 
+[DbContext(typeof(OranumDbContext))]
+[Migration("202603240001_InitialCreate")]
 public partial class InitialCreate : Migration
 {
     protected override void Up(MigrationBuilder migrationBuilder)
@@ -71,3 +74,4 @@ public partial class InitialCreate : Migration
         migrationBuilder.DropTable(name: "name_readings");
     }
 }
+

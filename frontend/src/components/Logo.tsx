@@ -1,4 +1,4 @@
-﻿import { MoonStar } from "lucide-react";
+import { MoonStar } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function Logo() {
@@ -9,7 +9,7 @@ export function Logo() {
       </span>
       <span>
         <span className="block font-display text-3xl tracking-[0.2em] text-white">Oranum</span>
-        <span className="block text-[0.68rem] uppercase tracking-[0.34em] text-mist/80">Seu nome revela a sua vibracao</span>
+        <span className="block text-[0.68rem] uppercase tracking-[0.34em] text-mist/80">Seu nome revela a sua vibração</span>
       </span>
     </Link>
   );

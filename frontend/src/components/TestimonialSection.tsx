@@ -1,4 +1,4 @@
-﻿import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { MysticalCard } from "@/components/MysticalCard";
 import { SectionHeading } from "@/components/SectionHeading";
 
@@ -6,17 +6,17 @@ const testimonials = [
   {
     name: "Camila A.",
     role: "Diretora criativa",
-    quote: "A leitura ficou elegante, sensivel e com a sensacao de que foi feita para mim. Compartilhei no mesmo instante.",
+    quote: "A leitura ficou elegante, sensível e com a sensação de que foi feita para mim. Compartilhei no mesmo instante.",
   },
   {
     name: "Renato M.",
     role: "Empreendedor",
-    quote: "A mistura entre numerologia, arquetipos e texto mistico trouxe profundidade sem soar exagerada. Conversao pura.",
+    quote: "A mistura entre numerologia, arquétipos e linguagem mística trouxe profundidade sem soar exagerada. É envolvente do início ao fim.",
   },
   {
-    name: "Livia S.",
+    name: "Lívia S.",
     role: "Consultora de imagem",
-    quote: "O visual e o ritual da experiencia fazem o resultado parecer um presente premium. Muito acima do comum.",
+    quote: "O visual e o ritual da experiência fazem o resultado parecer um presente premium. Muito acima do comum.",
   },
 ];
 
@@ -26,8 +26,8 @@ export function TestimonialSection() {
       <div className="container-shell space-y-10">
         <SectionHeading
           eyebrow="Ecos de quem sentiu"
-          title="Uma experiencia feita para tocar imaginario, identidade e desejo de compartilhar"
-          description="Cada leitura entrega impacto visual e emocional, com linguagem elegante e memoravel desde o primeiro toque."
+          title="Uma experiência feita para tocar imaginário, identidade e desejo de compartilhar"
+          description="Cada leitura entrega impacto visual e emocional, com linguagem elegante e memorável desde o primeiro toque."
           align="center"
         />
         <div className="grid gap-6 lg:grid-cols-3">

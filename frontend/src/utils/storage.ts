@@ -1,4 +1,4 @@
-﻿import type {
+import type {
   BirthDateReadingResponse,
   CompatibilityReadingResponse,
   NameReadingResponse,
@@ -9,6 +9,8 @@ const keys = {
   birthReading: "oranum:birth-reading",
   compatibilityReading: "oranum:compatibility-reading",
   lastName: "oranum:last-name",
+  birthUnlocked: "oranum:birth-unlocked",
+  compatibilityUnlocked: "oranum:compatibility-unlocked",
 };
 
 function save<T>(key: string, value: T) {
@@ -26,6 +28,10 @@ function load<T>(key: string): T | null {
   } catch {
     return null;
   }
+}
+
+function loadBoolean(key: string) {
+  return load<boolean>(key) ?? false;
 }
 
 export const storage = {
@@ -53,5 +59,17 @@ export const storage = {
   },
   loadLastName() {
     return load<string>(keys.lastName);
+  },
+  unlockBirthAccess() {
+    save(keys.birthUnlocked, true);
+  },
+  hasBirthAccess() {
+    return loadBoolean(keys.birthUnlocked);
+  },
+  unlockCompatibilityAccess() {
+    save(keys.compatibilityUnlocked, true);
+  },
+  hasCompatibilityAccess() {
+    return loadBoolean(keys.compatibilityUnlocked);
   },
 };

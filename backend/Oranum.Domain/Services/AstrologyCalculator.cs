@@ -1,4 +1,4 @@
-﻿using Oranum.Domain.ValueObjects;
+using Oranum.Domain.ValueObjects;
 
 namespace Oranum.Domain.Services;
 
@@ -6,34 +6,34 @@ public sealed class AstrologyCalculator
 {
     private static readonly Dictionary<string, string> ElementBySign = new()
     {
-        ["Aries"] = "Fogo",
+        ["Áries"] = "Fogo",
         ["Touro"] = "Terra",
-        ["Gemeos"] = "Ar",
-        ["Cancer"] = "Agua",
-        ["Leao"] = "Fogo",
+        ["Gêmeos"] = "Ar",
+        ["Câncer"] = "Água",
+        ["Leão"] = "Fogo",
         ["Virgem"] = "Terra",
         ["Libra"] = "Ar",
-        ["Escorpiao"] = "Agua",
-        ["Sagitario"] = "Fogo",
-        ["Capricornio"] = "Terra",
-        ["Aquario"] = "Ar",
-        ["Peixes"] = "Agua"
+        ["Escorpião"] = "Água",
+        ["Sagitário"] = "Fogo",
+        ["Capricórnio"] = "Terra",
+        ["Aquário"] = "Ar",
+        ["Peixes"] = "Água"
     };
 
     private static readonly Dictionary<string, string> SignEnergyMap = new()
     {
-        ["Aries"] = "Impulso de iniciacao, coragem e movimento.",
-        ["Touro"] = "Presenca serena, sensualidade e estabilidade.",
-        ["Gemeos"] = "Curiosidade, linguagem e conexoes vivas.",
-        ["Cancer"] = "Memoria emocional, cuidado e intuicao.",
-        ["Leao"] = "Expressao criativa, brilho e nobreza afetiva.",
-        ["Virgem"] = "Refino, observacao e servico consciente.",
+        ["Áries"] = "Impulso de início, coragem e movimento.",
+        ["Touro"] = "Presença serena, sensualidade e estabilidade.",
+        ["Gêmeos"] = "Curiosidade, linguagem e conexões vivas.",
+        ["Câncer"] = "Memória emocional, cuidado e intuição.",
+        ["Leão"] = "Expressão criativa, brilho e nobreza afetiva.",
+        ["Virgem"] = "Refino, observação e serviço consciente.",
         ["Libra"] = "Harmonia, beleza e senso de reciprocidade.",
-        ["Escorpiao"] = "Profundidade, magnetismo e renascimento.",
-        ["Sagitario"] = "Sentido, expansao e busca espiritual.",
-        ["Capricornio"] = "Estrutura, legado e maturidade.",
-        ["Aquario"] = "Originalidade, visao de futuro e liberdade.",
-        ["Peixes"] = "Sensibilidade, imaginacao e transcendencia."
+        ["Escorpião"] = "Profundidade, magnetismo e renascimento.",
+        ["Sagitário"] = "Sentido, expansão e busca espiritual.",
+        ["Capricórnio"] = "Estrutura, legado e maturidade.",
+        ["Aquário"] = "Originalidade, visão de futuro e liberdade.",
+        ["Peixes"] = "Sensibilidade, imaginação e transcendência."
     };
 
     public BirthProfile CalculateBirthProfile(DateOnly birthDate, int lifePathNumber)
@@ -41,8 +41,8 @@ public sealed class AstrologyCalculator
         var zodiacSign = ResolveSign(birthDate);
         var element = ElementBySign[zodiacSign];
         var centralEnergy = SignEnergyMap[zodiacSign];
-        var symbolicProfile = $"{zodiacSign} com caminho {lifePathNumber} cria uma assinatura de alma marcada por {ResolveLifePathTheme(lifePathNumber).ToLowerInvariant()}";
-        var mission = $"Sua missao simbolica pede {ResolveLifePathTheme(lifePathNumber).ToLowerInvariant()} com a sensibilidade do elemento {element.ToLowerInvariant()}.";
+        var symbolicProfile = $"{zodiacSign} com caminho {lifePathNumber} forma uma assinatura marcada por {ResolveLifePathTheme(lifePathNumber).ToLowerInvariant()}";
+        var mission = $"Sua missão simbólica pede {ResolveLifePathTheme(lifePathNumber).ToLowerInvariant()} com a sensibilidade do elemento {element.ToLowerInvariant()}.";
 
         return new BirthProfile(
             birthDate,
@@ -63,17 +63,17 @@ public sealed class AstrologyCalculator
 
         return (month, day) switch
         {
-            (3, >= 21) or (4, <= 19) => "Aries",
+            (3, >= 21) or (4, <= 19) => "Áries",
             (4, >= 20) or (5, <= 20) => "Touro",
-            (5, >= 21) or (6, <= 20) => "Gemeos",
-            (6, >= 21) or (7, <= 22) => "Cancer",
-            (7, >= 23) or (8, <= 22) => "Leao",
+            (5, >= 21) or (6, <= 20) => "Gêmeos",
+            (6, >= 21) or (7, <= 22) => "Câncer",
+            (7, >= 23) or (8, <= 22) => "Leão",
             (8, >= 23) or (9, <= 22) => "Virgem",
             (9, >= 23) or (10, <= 22) => "Libra",
-            (10, >= 23) or (11, <= 21) => "Escorpiao",
-            (11, >= 22) or (12, <= 21) => "Sagitario",
-            (12, >= 22) or (1, <= 19) => "Capricornio",
-            (1, >= 20) or (2, <= 18) => "Aquario",
+            (10, >= 23) or (11, <= 21) => "Escorpião",
+            (11, >= 22) or (12, <= 21) => "Sagitário",
+            (12, >= 22) or (1, <= 19) => "Capricórnio",
+            (1, >= 20) or (2, <= 18) => "Aquário",
             _ => "Peixes"
         };
     }
@@ -81,19 +81,19 @@ public sealed class AstrologyCalculator
     private static string ResolveLifePathTheme(int lifePathNumber) =>
         lifePathNumber switch
         {
-            1 => "liderar o proprio destino",
-            2 => "cultivar cooperacao e escuta",
-            3 => "expressar a propria verdade com beleza",
+            1 => "liderar o próprio destino",
+            2 => "cultivar cooperação e escuta",
+            3 => "expressar a própria verdade com beleza",
             4 => "construir bases consistentes",
-            5 => "abrir caminhos e atravessar mudancas",
-            6 => "nutrir e harmonizar relacoes",
+            5 => "abrir caminhos e atravessar mudanças",
+            6 => "nutrir e harmonizar relações",
             7 => "buscar sabedoria interior",
-            8 => "manifestar poder com consciencia",
-            9 => "encerrar ciclos com compaixao",
-            11 => "inspirar por intuicao",
-            22 => "materializar visoes amplas",
-            33 => "servir e curar pela presenca",
-            _ => "equilibrar experiencias com discernimento"
+            8 => "manifestar poder com consciência",
+            9 => "encerrar ciclos com compaixão",
+            11 => "inspirar por intuição",
+            22 => "materializar visões amplas",
+            33 => "servir e curar pela presença",
+            _ => "equilibrar experiências com discernimento"
         };
 
     private static IReadOnlyList<string> ResolveChallenges(string zodiacSign, int lifePathNumber)
@@ -102,36 +102,36 @@ public sealed class AstrologyCalculator
         {
             zodiacSign switch
             {
-                "Aries" => "moderar impulsos sem apagar sua coragem",
-                "Touro" => "flexibilizar quando a vida pedir mudanca",
-                "Gemeos" => "aprofundar sem dispersar sua energia",
-                "Cancer" => "proteger a sensibilidade sem se fechar",
-                "Leao" => "brilhar sem depender de aprovacao constante",
-                "Virgem" => "trocar perfeccionismo por discernimento amoroso",
-                "Libra" => "escolher com firmeza sem se perder no outro",
-                "Escorpiao" => "soltar o controle diante do invisivel",
-                "Sagitario" => "ancorar visoes em constancia",
-                "Capricornio" => "permitir vulnerabilidade junto com ambicao",
-                "Aquario" => "integrar liberdade e intimidade",
-                _ => "transformar sensibilidade em limites saudaveis"
+                "Áries" => "Moderar impulsos sem apagar a própria coragem.",
+                "Touro" => "Flexibilizar quando a vida pedir mudança.",
+                "Gêmeos" => "Aprofundar sem dispersar a energia.",
+                "Câncer" => "Proteger a sensibilidade sem se fechar.",
+                "Leão" => "Brilhar sem depender de aprovação constante.",
+                "Virgem" => "Trocar perfeccionismo por discernimento amoroso.",
+                "Libra" => "Escolher com firmeza sem se perder no outro.",
+                "Escorpião" => "Soltar o controle diante do invisível.",
+                "Sagitário" => "Ancorar visões em constância.",
+                "Capricórnio" => "Permitir vulnerabilidade junto com ambição.",
+                "Aquário" => "Integrar liberdade e intimidade.",
+                _ => "Transformar sensibilidade em limites saudáveis."
             }
         };
 
         challenges.Add(lifePathNumber switch
         {
-            1 => "evitar excesso de individualismo",
-            2 => "nao silenciar a propria vontade",
-            3 => "canalizar criatividade com foco",
-            4 => "nao endurecer diante do imprevisto",
-            5 => "sustentar compromissos sem perder liberdade",
-            6 => "nao assumir responsabilidades que nao sao suas",
-            7 => "evitar isolamento emocional",
-            8 => "humanizar a relacao com poder e resultado",
-            9 => "estabelecer limites energeticos",
-            11 => "organizar a intuicao para nao sobrecarregar o corpo",
-            22 => "dividir o peso da visao com processos concretos",
-            33 => "cuidar de si antes de sustentar todos ao redor",
-            _ => "filtrar excessos emocionais"
+            1 => "Evitar excesso de individualismo.",
+            2 => "Não silenciar a própria vontade.",
+            3 => "Canalizar criatividade com foco.",
+            4 => "Não endurecer diante do imprevisto.",
+            5 => "Sustentar compromissos sem perder liberdade.",
+            6 => "Não assumir responsabilidades que não são suas.",
+            7 => "Evitar isolamento emocional.",
+            8 => "Humanizar a relação com poder e resultado.",
+            9 => "Estabelecer limites energéticos.",
+            11 => "Organizar a intuição para não sobrecarregar o corpo.",
+            22 => "Dividir o peso da visão com processos concretos.",
+            33 => "Cuidar de si antes de sustentar todos ao redor.",
+            _ => "Filtrar excessos emocionais."
         });
 
         return challenges;
@@ -143,36 +143,36 @@ public sealed class AstrologyCalculator
         {
             zodiacSign switch
             {
-                "Aries" => "capacidade de abrir caminhos com coragem",
-                "Touro" => "poder de materializar e sustentar",
-                "Gemeos" => "dom de traduzir ideias em conexao",
-                "Cancer" => "forca intuitiva e acolhedora",
-                "Leao" => "presenca inspiradora e generosa",
-                "Virgem" => "talento para refinar, curar e organizar",
-                "Libra" => "habilidade de harmonizar ambientes e vinculos",
-                "Escorpiao" => "potencial de transformacao profunda",
-                "Sagitario" => "visao expansiva e filosofica",
-                "Capricornio" => "lideranca serena e construcao de legado",
-                "Aquario" => "originalidade e pensamento de futuro",
-                _ => "imaginacao espiritual e empatia elevada"
+                "Áries" => "Capacidade de abrir caminhos com coragem.",
+                "Touro" => "Poder de materializar e sustentar.",
+                "Gêmeos" => "Dom de traduzir ideias em conexão.",
+                "Câncer" => "Força intuitiva e acolhedora.",
+                "Leão" => "Presença inspiradora e generosa.",
+                "Virgem" => "Talento para refinar, curar e organizar.",
+                "Libra" => "Habilidade de harmonizar ambientes e vínculos.",
+                "Escorpião" => "Potencial de transformação profunda.",
+                "Sagitário" => "Visão expansiva e filosófica.",
+                "Capricórnio" => "Liderança serena e construção de legado.",
+                "Aquário" => "Originalidade e pensamento de futuro.",
+                _ => "Imaginação espiritual e empatia elevada."
             }
         };
 
         potentials.Add(lifePathNumber switch
         {
-            1 => "liderar com autenticidade",
-            2 => "criar pontes e aliancas",
-            3 => "encantar pela expressao",
-            4 => "erguer estruturas confiaveis",
-            5 => "renovar cenarios com versatilidade",
-            6 => "cuidar com beleza e presenca",
-            7 => "interpretar o invisivel com profundidade",
-            8 => "manifestar resultados com magnetismo",
-            9 => "inspirar pela compaixao",
-            11 => "iluminar caminhos por intuicao",
-            22 => "concretizar visoes coletivas",
-            33 => "curar e orientar com amor",
-            _ => "trazer equilibrio aos ciclos"
+            1 => "Liderar com autenticidade.",
+            2 => "Criar pontes e alianças.",
+            3 => "Encantar pela expressão.",
+            4 => "Erguer estruturas confiáveis.",
+            5 => "Renovar cenários com versatilidade.",
+            6 => "Cuidar com beleza e presença.",
+            7 => "Interpretar o invisível com profundidade.",
+            8 => "Manifestar resultados com magnetismo.",
+            9 => "Inspirar pela compaixão.",
+            11 => "Iluminar caminhos por intuição.",
+            22 => "Concretizar visões coletivas.",
+            33 => "Curar e orientar com amor.",
+            _ => "Trazer equilíbrio aos ciclos."
         });
 
         return potentials;

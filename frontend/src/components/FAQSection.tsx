@@ -1,22 +1,22 @@
-﻿import { ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { SectionHeading } from "@/components/SectionHeading";
 
 const items = [
   {
-    question: "Como a leitura e criada?",
-    answer: "O Oranum combina calculos deterministicos de numerologia, leitura simbolica da data e um enriquecimento narrativo com IA para transformar os sinais em uma experiencia elegante.",
+    question: "Como a leitura é criada?",
+    answer: "O Oranum combina símbolos do nome, referências clássicas de arquétipos, numerologia e, quando você quiser, a sua data de nascimento para compor uma leitura mais rica e pessoal.",
   },
   {
-    question: "Preciso informar a data de nascimento logo no inicio?",
-    answer: "Nao. Voce pode revelar primeiro o mapa energetico do nome e depois desbloquear a camada complementar com signo solar, caminho de vida e tendencias simbolicas.",
+    question: "Preciso informar a data de nascimento logo no início?",
+    answer: "Não. Você pode revelar primeiro o mapa energético do nome e depois desbloquear a camada complementar com signo solar, caminho de vida e tendências simbólicas.",
   },
   {
     question: "A compatibilidade depende de duas datas?",
-    answer: "Ela funciona apenas com os nomes, mas fica mais rica quando voce adiciona as datas de nascimento para ampliar a leitura de afinidade emocional e espiritual.",
+    answer: "Ela funciona apenas com os nomes, mas fica mais rica quando você adiciona as datas de nascimento para ampliar a leitura de afinidade emocional e espiritual.",
   },
   {
-    question: "Isso e uma verdade absoluta?",
-    answer: "Nao. O conteudo e interpretativo e voltado para autoconhecimento e entretenimento, com linguagem mistica e narrativa personalizada.",
+    question: "Isso é uma verdade absoluta?",
+    answer: "Não. O conteúdo é interpretativo e voltado para autoconhecimento e entretenimento, com linguagem mística e narrativa personalizada.",
   },
 ];
 
@@ -26,7 +26,7 @@ export function FAQSection() {
       <div className="container-shell space-y-10">
         <SectionHeading
           eyebrow="FAQ"
-          title="Perguntas frequentes sobre a experiencia Oranum"
+          title="Perguntas frequentes sobre a experiência Oranum"
           description="Tudo foi desenhado para ser simples na entrada, encantador no percurso e sofisticado no resultado final."
           align="center"
         />

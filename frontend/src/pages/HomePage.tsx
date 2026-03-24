@@ -1,49 +1,49 @@
-﻿import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Compass, Gem, Orbit, Sparkles, WandSparkles } from "lucide-react";
+import { FAQSection } from "@/components/FAQSection";
 import { HeroSection } from "@/components/HeroSection";
 import { MysticalCard } from "@/components/MysticalCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import { TestimonialSection } from "@/components/TestimonialSection";
-import { FAQSection } from "@/components/FAQSection";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const features = [
   {
     icon: Sparkles,
     title: "Energia do nome",
-    description: "Um retrato simbolico da vibracao que seu nome projeta, com numerologia, forcas e nuances de presenca.",
+    description: "Um retrato simbólico da vibração que seu nome projeta, com numerologia, forças e nuances de presença.",
   },
   {
     icon: Compass,
-    title: "Missao pela data",
-    description: "Signo solar, elemento, caminho de vida e uma sintese elegante entre astrologia basica e leitura intuitiva.",
+    title: "Missão pela data",
+    description: "Signo solar, elemento, caminho de vida e uma síntese elegante entre astrologia básica e leitura interpretativa.",
   },
   {
     icon: Gem,
     title: "Compatibilidade refinada",
-    description: "Afinidade energetica, emocional e espiritual em uma leitura bonita, clara e altamente compartilhavel.",
+    description: "Afinidade energética, emocional e espiritual em uma leitura bonita, clara e altamente compartilhável.",
   },
 ];
 
 const steps = [
   {
     title: "Digite o nome",
-    description: "O ritual comeca pelo nome que voce deseja revelar, sem friccao e em poucos segundos.",
+    description: "O ritual começa pelo nome que você deseja revelar, sem fricção e em poucos segundos.",
   },
   {
-    title: "A IA recebe contexto real",
-    description: "O backend calcula numerologia, signo, caminho de vida e score de compatibilidade antes de enriquecer a narrativa com IA.",
+    title: "Seu mapa ganha profundidade",
+    description: "Símbolos, ritmos e referências conhecidas se unem para criar uma leitura mais pessoal, elegante e envolvente.",
   },
   {
     title: "Receba sua leitura",
-    description: "A entrega surge em um layout premium, elegante e pronto para virar conversa, insight e compartilhamento.",
+    description: "O resultado chega em um visual premium, pronto para virar conversa, insight e compartilhamento.",
   },
 ];
 
 export function HomePage() {
   usePageMeta(
-    "Oranum | Seu nome revela a sua vibracao",
-    "Descubra o mapa energetico do seu nome com uma experiencia mistica premium, numerologia simbolica e leituras elegantes com IA.",
+    "Oranum | Seu nome revela a sua vibração",
+    "Descubra o mapa energético do seu nome com uma experiência mística premium, numerologia simbólica e leituras elegantes.",
   );
 
   return (
@@ -53,8 +53,8 @@ export function HomePage() {
       <section className="section-space pt-8">
         <div className="container-shell space-y-10">
           <SectionHeading
-            eyebrow="O que voce recebe"
-            title="Uma jornada simbolica desenhada para causar encantamento e clareza"
+            eyebrow="O que você recebe"
+            title="Uma jornada simbólica desenhada para causar encantamento e clareza"
             description="Oranum traduz sinais em linguagem sofisticada: profunda o bastante para envolver, simples o bastante para ser lida de imediato."
           />
           <div className="grid gap-6 lg:grid-cols-3">
@@ -80,8 +80,8 @@ export function HomePage() {
         <div className="container-shell grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <SectionHeading
             eyebrow="Como funciona"
-            title="Determinismo elegante no backend. Magia narrativa na entrega."
-            description="A experiencia une logica real de negocio com uma camada de linguagem simbolica lapidada para soar pessoal, envolvente e premium."
+            title="Uma leitura que combina profundidade simbólica com clareza imediata"
+            description="A experiência foi pensada para soar pessoal, sofisticada e envolvente do primeiro toque ao resultado final."
           />
           <div className="space-y-5">
             {steps.map((step, index) => (
@@ -105,17 +105,17 @@ export function HomePage() {
               <div>
                 <span className="gold-label">
                   <WandSparkles className="size-4" />
-                  Feito para conversao
+                  Feito para encantar
                 </span>
-                <h2 className="mt-6 max-w-2xl font-display text-4xl text-white sm:text-5xl">Resultados bonitos, linguagem memoravel e uma experiencia que pede para ser compartilhada.</h2>
-                <p className="mt-5 max-w-2xl text-base leading-8 text-mist/85 sm:text-lg">Da primeira impressao ao resultado final, cada detalhe do Oranum foi pensado para transmitir misterio, valor percebido e desejo imediato de explorar mais uma camada.</p>
+                <h2 className="mt-6 max-w-2xl font-display text-4xl text-white sm:text-5xl">Resultados bonitos, linguagem memorável e uma experiência que pede para ser compartilhada.</h2>
+                <p className="mt-5 max-w-2xl text-base leading-8 text-mist/85 sm:text-lg">Da primeira impressão ao resultado final, cada detalhe do Oranum foi pensado para transmitir mistério, valor percebido e desejo imediato de explorar mais uma camada.</p>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 {[
-                  ["Nome", "Numerologia, energia, arquetipo e leitura simbolica"],
+                  ["Nome", "Numerologia, energia, arquétipo e leitura simbólica"],
                   ["Data", "Signo solar, caminho de vida, potenciais e desafios"],
-                  ["Vinculo", "Compatibilidade energetica com texto relacional"],
-                  ["Forma", "Visual premium, microinteracoes e responsividade"],
+                  ["Vínculo", "Compatibilidade energética com texto relacional"],
+                  ["Forma", "Visual premium, microinterações e experiência fluida"],
                 ].map(([title, text]) => (
                   <div key={title} className="rounded-[24px] border border-white/10 bg-ink/60 p-5">
                     <p className="text-xs uppercase tracking-[0.32em] text-gold">{title}</p>
@@ -137,10 +137,10 @@ export function HomePage() {
             <div className="mx-auto max-w-3xl">
               <span className="gold-label">
                 <Orbit className="size-4" />
-                Ultimo convite
+                Último convite
               </span>
-              <h2 className="mt-6 font-display text-4xl text-white sm:text-5xl">Revele agora a vibracao que seu nome projeta no mundo.</h2>
-              <p className="mt-4 text-base leading-8 text-mist/85 sm:text-lg">Em poucos instantes, o Oranum traduz simbolos em uma leitura elegante, envolvente e feita para tocar a curiosidade profunda de quem voce e.</p>
+              <h2 className="mt-6 font-display text-4xl text-white sm:text-5xl">Revele agora a vibração que seu nome projeta no mundo.</h2>
+              <p className="mt-4 text-base leading-8 text-mist/85 sm:text-lg">Em poucos instantes, o Oranum traduz símbolos em uma leitura elegante, envolvente e feita para tocar a curiosidade profunda de quem você é.</p>
               <div className="mt-8 flex justify-center">
                 <a href="#topo" className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/10 px-6 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-gold transition hover:bg-gold/15">
                   <Sparkles className="size-4" />
