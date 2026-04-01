@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Oranum.Application.Abstractions;
@@ -15,8 +15,8 @@ public static class DependencyInjection
     {
         services.Configure<OpenAiOptions>(configuration.GetSection(OpenAiOptions.SectionName));
 
-        var connectionString = configuration.GetConnectionString("DefaultConnection")
-            ?? "Host=localhost;Port=5432;Database=oranum;Username=oranum;Password=oranum";
+        var connectionString = ConnectionStringResolver.Resolve(
+            configuration.GetConnectionString("DefaultConnection"));
 
         services.AddDbContext<OranumDbContext>(options =>
         {
